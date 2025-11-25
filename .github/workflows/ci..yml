@@ -12,6 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+
+
     steps:
       # Paso 1: Clonar el repositorio
       - name: Checkout del código
@@ -28,24 +30,20 @@ jobs:
       # 3. Ejecutar los plugins
       - name: Build and Test
         run: mvn clean verify
-        working-directory: ${{ github.workspace }}
 
       # 4. Ejecutar Checkstyle
       - name: Checkstyle Analysis
         run: mvn checkstyle:checkstyle
-        working-directory: ${{ github.workspace }}
         continue-on-error: true
 
       # 5. Ejecutar PMD
       - name: PMD Analysis
         run: mvn pmd:check
-        working-directory: ${{ github.workspace }}
         continue-on-error: true
 
       # 6. Generar reporte de cobertura con JaCoCo
       - name: Generate Coverage Report
         run: mvn jacoco:report
-        working-directory: ${{ github.workspace }}
 
       # Paso 7: Subir artefactos generados
       - name: Upload artifacts
@@ -53,6 +51,6 @@ jobs:
         with:
           name: Maven-Reports
           path: |
-            target/site/jacoco/jacoco.xml
-            target/checkstyle-result.xml
-            target/pmd.xml
+            biblioteca/target/site/jacoco/jacoco.xml
+            biblioteca/target/checkstyle-result.xml
+            biblioteca/target/pmd.xml
